@@ -29,6 +29,7 @@ use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\OpenAPI;
 use OCP\AppFramework\Http\Attribute\UserRateLimit;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IRequest;
 use OCP\IUserSession;
 
@@ -46,6 +47,7 @@ class MailboxesController extends Controller {
 		SyncService $syncService,
 		private IUserSession $userSession,
 		private IUserConfig $userConfig,
+		private ITimeFactory $timeFactory,
 	) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->accountService = $accountService;
@@ -136,7 +138,7 @@ class MailboxesController extends Controller {
 		$account = $this->accountService->find($this->currentUserId, $mailbox->getAccountId());
 		$order = $sortOrder === 'newest' ? IMailSearch::ORDER_NEWEST_FIRST: IMailSearch::ORDER_OLDEST_FIRST;
 
-		$this->userConfig->setValueInt($this->currentUserId, Application::APP_ID, 'ui-hearthbeat', time());
+		$this->userConfig->setValueInt($this->currentUserId, Application::APP_ID, 'ui-heartbeat', $this->timeFactory->getTime());
 
 		try {
 			$syncResponse = $this->syncService->syncMailbox(

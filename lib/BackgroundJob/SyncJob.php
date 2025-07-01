@@ -84,7 +84,7 @@ class SyncJob extends TimedJob {
 			return;
 		}
 
-		if (($this->userConfig->getValueInt($account->getUserId(), Application::APP_ID, 'ui-hearthbeat') - $this->time->getTime()) > 900) {
+		if (($this->userConfig->getValueInt($account->getUserId(), Application::APP_ID, 'ui-heartbeat') - $this->time->getTime()) > 900) {
 			$this->logger->debug('Detected user activity, skipping background sync job');
 			$this->setInterval(900);
 			return;

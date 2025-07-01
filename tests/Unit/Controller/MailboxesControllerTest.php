@@ -21,6 +21,7 @@ use OCA\Mail\IMAP\MailboxStats;
 use OCA\Mail\Service\AccountService;
 use OCA\Mail\Service\Sync\SyncService;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -48,6 +49,7 @@ class MailboxesControllerTest extends TestCase {
 
 	private IUserSession|MockObject $userSession;
 	private IUserConfig|MockObject $userConfig;
+	private ITimeFactory|MockObject $timeFactory;
 
 	public function setUp(): void {
 		parent::setUp();
@@ -58,12 +60,15 @@ class MailboxesControllerTest extends TestCase {
 		$this->syncService = $this->createMock(SyncService::class);
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->userConfig = $this->createMock(IUserConfig::class);
+		$this->timeFactory = $this->createMock(ITimeFactory::class);
 
 		$userObject = $this->createMock(IUser::class);
 		$userObject->method('getUID')
 			->willReturn('john');
 		$this->userSession->method('getUser')
 			->willReturn($userObject);
+		$this->timeFactory->method('getTime')
+			->willReturn(1234567890);
 
 		$this->controller = new MailboxesController(
 			$this->request,
@@ -71,7 +76,8 @@ class MailboxesControllerTest extends TestCase {
 			$this->mailManager,
 			$this->syncService,
 			$this->userSession,
-			$this->userConfig
+			$this->userConfig,
+			$this->timeFactory
 		);
 	}
 
