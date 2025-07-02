@@ -53,7 +53,7 @@
 							</Popover>
 						</div>
 						<Mailbox v-show="hasFollowUpEnvelopes"
-							:name="t('mail', 'follow ups')"
+							:load-more-label="t('mail', 'follow ups')"
 							:account="unifiedAccount"
 							:mailbox="followUpMailbox"
 							:search-query="appendToSearch(followUpQuery)"
@@ -82,7 +82,7 @@
 						</div>
 						<Mailbox v-show="hasImportantEnvelopes"
 							class="nameimportant"
-							:name="t('mail', 'important messages')"
+							:load-more-label="t('mail', 'important messages')"
 							:account="unifiedAccount"
 							:mailbox="unifiedInbox"
 							:search-query="appendToSearch(priorityImportantQuery)"
@@ -95,7 +95,7 @@
 							class="app-content-list-item section-title other"
 							:name="t('mail', 'Other')" />
 						<Mailbox class="nameother"
-							:name="t('mail', 'other messages')"
+							:load-more-label="t('mail', 'other messages')"
 							:account="unifiedAccount"
 							:mailbox="unifiedInbox"
 							:search-query="appendToSearch(priorityOtherQuery)"
