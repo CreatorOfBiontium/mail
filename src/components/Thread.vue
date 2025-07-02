@@ -93,6 +93,12 @@ export default {
 		ThreadEnvelope,
 		Popover,
 	},
+	props: {
+		currentAccountEmail: {
+			type: String,
+			required: true,
+		},
+	},
 
 	data() {
 		return {
@@ -165,7 +171,7 @@ export default {
 		threadParticipants() {
 			const recipients = this.thread.flatMap(envelope => {
 				return envelope.from.concat(envelope.to).concat(envelope.cc)
-			})
+			}).filter(participant => participant.email !== this.currentAccountEmail)
 			return uniqBy(prop('email'), recipients)
 		},
 		threadSubject() {
@@ -589,7 +595,8 @@ export default {
 	// initial width
 	width: 0;
 	// while scrolling, the back button overlaps with subject on small screen
-	padding-left: calc(var(--default-grid-baseline) * 21);
+	// 70ox to allign with the message text 60px mail-content margin + 2px envelope border + 8px envelope margin
+	padding-left: 70px;
 	// grow and try to fill 100%
 	flex: 1 1 auto;
 	h2,
