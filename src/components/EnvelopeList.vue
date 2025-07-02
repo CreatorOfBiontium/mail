@@ -128,7 +128,7 @@
 				class="load-more"
 				@click="$emit('load-more')">
 				<AddIcon :size="16" />
-				{{ loadMoreLabel ? t('mail', 'Load more {loadMoreLabel}', { loadMoreLabel }): t('mail', 'Load more') }}
+				{{ loadMoreText }}
 			</div>
 			<div id="load-more-mail-messages" key="loadingMore" :class="{'icon-loading-small': loadingMore}" />
 		</transition-group>
