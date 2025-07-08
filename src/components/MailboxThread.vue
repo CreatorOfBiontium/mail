@@ -239,7 +239,7 @@ export default {
 		hasImportantEnvelopes() {
 			const map = this.mainStore.getEnvelopes(
 				this.unifiedInbox.databaseId,
-				this.appendToSearch(this.priorityImportantQuery)
+				this.appendToSearch(this.priorityImportantQuery),
 			)
 			const envelopes = Array.isArray(map) ? map : Array.from(map?.values() || [])
 			return envelopes.length > 0
@@ -295,7 +295,7 @@ export default {
 		},
 		groupEnvelopes() {
 			const allEnvelopes = this.mainStore.getEnvelopes(this.mailbox.databaseId, this.searchQuery)
-			return this.groupEnvelopesByDate(allEnvelopes)
+			return this.groupEnvelopesByDate(allEnvelopes, this.mainStore.syncTimestamp)
 		},
 	},
 	watch: {
@@ -333,8 +333,8 @@ export default {
 		clearTimeout(this.startMailboxTimer)
 	},
 	methods: {
-		groupEnvelopesByDate(envelopes) {
-			const now = new Date()
+		groupEnvelopesByDate(envelopes, syncTimestamp) {
+			const now = new Date(syncTimestamp)
 			const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000)
 			const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 			const startOfYesterday = new Date(startOfToday)
