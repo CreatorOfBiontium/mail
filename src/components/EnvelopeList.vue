@@ -128,7 +128,7 @@
 				class="load-more"
 				@click="$emit('load-more')">
 				<AddIcon :size="16" />
-				{{ loadMoreText }}
+				{{ loadMoreLabel }}
 			</div>
 			<div id="load-more-mail-messages" key="loadingMore" :class="{'icon-loading-small': loadingMore}" />
 		</transition-group>
@@ -240,19 +240,6 @@ export default {
 		...mapStores(useMainStore),
 		sortOrder() {
 			return this.mainStore.getPreference('sort-order', 'newest')
-		},
-		// This is intential to get proper translation
-		loadMoreText() {
-			switch (this.loadMoreLabel) {
-			case 'follow ups':
-				return this.t('mail', 'Load more follow ups')
-			case 'important messages':
-				return this.t('mail', 'Load more important messages')
-			case 'other messages':
-				return this.t('mail', 'Load more other messages')
-			default:
-				return this.t('mail', 'Load more')
-			}
 		},
 		sortedEnvelops() {
 			if (this.sortOrder === 'oldest') {
