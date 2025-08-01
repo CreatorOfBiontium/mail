@@ -201,4 +201,13 @@ export default {
 	flex: 1 1 100%;
 	min-width: 70%;
 }
+
+@media only screen and (max-width: var(--breakpoint-mobile)) {
+	/* Make sure the app content doesn't overflow on mobile */
+    :deep(.app-content-details) {
+        max-width: 100%;
+        min-width: 0;
+    }
+}
+
 </style>
